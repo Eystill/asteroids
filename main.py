@@ -16,9 +16,14 @@ def main():
 
 	# creating an infinite loop
 	while True:
-		# Draw a black square inside the game area
-		pygame.Surface.fill(screen, (0,0,0))
-		pygame.display.flip()
+		# If the player closes the window then terminate the program
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				return
 
+		# Draw a black square inside the game area and redraw it as long as the program runs
+		screen.fill((0,0,0))
+		pygame.display.flip()
+		
 if __name__ == "__main__":
 	main()
