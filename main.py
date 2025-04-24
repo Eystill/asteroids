@@ -11,6 +11,10 @@ def main():
 	print(f"Screen width: {SCREEN_WIDTH}")
 	print(f"Screen height: {SCREEN_HEIGHT}")
 
+	# Create a FPS controller object to use for frames per seconds calculations
+	fps_controller = pygame.time.Clock()
+	dt = 0
+
 	# Initialize game area with the resolution specified in constants
 	screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -18,6 +22,10 @@ def main():
 	while True:
 		# If the player closes the window then terminate the program
 		for event in pygame.event.get():
+			# pause the loop for 1/60th of a second before restarting
+			fps_controller.tick(60)
+			# The .tick() function returns the time it took in seconds from the last time it ran. Divide with 1000 to get this in miliseconds.
+			dt = fps_controller.tick(60) / 1000
 			if event.type == pygame.QUIT:
 				return
 
