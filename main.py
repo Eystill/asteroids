@@ -3,6 +3,7 @@
 # throughout this file
 import pygame
 from constants import *
+from player import *
 
 def main():
 	pygame.init()
@@ -17,6 +18,8 @@ def main():
 
 	# Initialize game area with the resolution specified in constants
 	screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+	# Initialize a player with properties from the Player class in player.py and the height and width form constants
+	player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
 	# creating an infinite loop
 	while True:
@@ -30,7 +33,9 @@ def main():
 				return
 
 		# Draw a black square inside the game area and redraw it as long as the program runs
+		# Draw the player after drawing the black square, but before refreshing the whole image
 		screen.fill((0,0,0))
+		player.draw(screen)
 		pygame.display.flip()
 		
 if __name__ == "__main__":
