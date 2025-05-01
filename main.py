@@ -35,6 +35,7 @@ def main():
 		# Draw a black square inside the game area and redraw it as long as the program runs
 		# Draw the player after drawing the black square, but before refreshing the whole image
 		screen.fill((0,0,0))
+		player.update(dt)
 		player.draw(screen)
 		pygame.display.flip()
 		

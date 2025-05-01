@@ -1,12 +1,15 @@
+# Gane properties
 # Screen resolution
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
-# Dimentions and spawnrate of asteroid
+# Asteroid properties
+# ASTEROID_SPAWN_RATE is in seconds
 ASTEROID_MIN_RADIUS = 20
 ASTEROID_KINDS = 3
-ASTEROID_SPAWN_RATE = 0.8  # seconds
+ASTEROID_SPAWN_RATE = 0.8  
 ASTEROID_MAX_RADIUS = ASTEROID_MIN_RADIUS * ASTEROID_KINDS
 
-# Object sizes
+# Player properties
 PLAYER_RADIUS = 20
+PLAYER_TURN_SPEED = 300
