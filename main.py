@@ -4,6 +4,8 @@
 import pygame
 from constants import *
 from player import *
+from asteroids import *
+from asteroidfield import *
 
 def main():
 	pygame.init()
@@ -11,6 +13,17 @@ def main():
 	print("Starting Asteroids!")
 	print(f"Screen width: {SCREEN_WIDTH}")
 	print(f"Screen height: {SCREEN_HEIGHT}")
+
+	# groups to bundle methods to prevent clutter. updateable bundles all player updates and drawable bundles all drawing methods.
+	updateable = pygame.sprite.Group()
+	drawable = pygame.sprite.Group()
+	asteroids = pygame.sprite.Group()
+	asteroidfield = pygame.sprite.Group()
+
+	# Create containers to hold the groups
+	Player.containers = (updateable, drawable)
+	Asteroid.containers = (asteroids, updateable, drawable)
+	AsteroidField.containers = (asteroidfield, updateable)
 
 	# Create a FPS controller object to use for frames per seconds calculations
 	fps_controller = pygame.time.Clock()
@@ -20,6 +33,8 @@ def main():
 	screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 	# Initialize a player with properties from the Player class in player.py and the height and width form constants
 	player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+	# Set the asteroid field to a variable to use for later
+	asteroid_spawner = AsteroidField()
 
 	# creating an infinite loop
 	while True:
@@ -34,9 +49,11 @@ def main():
 
 		# Draw a black square inside the game area and redraw it as long as the program runs
 		# Draw the player after drawing the black square, but before refreshing the whole image
+		# Use the groups and containers defined on line 15 through 21
 		screen.fill((0,0,0))
-		player.update(dt)
-		player.draw(screen)
+		for drawing in drawable:
+			drawing.draw(screen)
+		updateable.update(dt)
 		pygame.display.flip()
 		
 if __name__ == "__main__":
