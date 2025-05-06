@@ -54,6 +54,12 @@ def main():
 		for drawing in drawable:
 			drawing.draw(screen)
 		updateable.update(dt)
+		# For every asteroid in asteroids, check for collision with the player. If true then exit the application
+		for asteroid in asteroids:
+			if player.collision(asteroid) == True:
+				print("Game over!")
+				import sys
+				sys.exit()
 		pygame.display.flip()
 		
 if __name__ == "__main__":
