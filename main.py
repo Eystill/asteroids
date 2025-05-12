@@ -6,6 +6,7 @@ from constants import *
 from player import *
 from asteroids import *
 from asteroidfield import *
+from shots import *
 
 def main():
 	pygame.init()
@@ -19,11 +20,13 @@ def main():
 	drawable = pygame.sprite.Group()
 	asteroids = pygame.sprite.Group()
 	asteroidfield = pygame.sprite.Group()
+	shot = pygame.sprite.Group()
 
 	# Create containers to hold the groups
 	Player.containers = (updateable, drawable)
 	Asteroid.containers = (asteroids, updateable, drawable)
 	AsteroidField.containers = (asteroidfield, updateable)
+	Shot.containers = shot
 
 	# Create a FPS controller object to use for frames per seconds calculations
 	fps_controller = pygame.time.Clock()
@@ -49,11 +52,16 @@ def main():
 
 		# Draw a black square inside the game area and redraw it as long as the program runs
 		# Draw the player after drawing the black square, but before refreshing the whole image
-		# Use the groups and containers defined on line 15 through 21
+		# draw the show when spacebar is pressed (See player.py where the call is made)
+		# Update all updateables except the shot via the updateable group.
+		# update the shot
 		screen.fill((0,0,0))
 		for drawing in drawable:
 			drawing.draw(screen)
+		shot.draw(screen)
 		updateable.update(dt)
+		shot.update(dt)
+
 		# For every asteroid in asteroids, check for collision with the player. If true then exit the application
 		for asteroid in asteroids:
 			if player.collision(asteroid) == True:
