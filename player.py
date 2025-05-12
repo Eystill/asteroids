@@ -10,6 +10,7 @@ class Player(CircleShape):
     def __init__(self, x, y):
         CircleShape.__init__(self, x, y, PLAYER_RADIUS)
         self.rotation = 0
+        self.shoot_timer = 0
 
     # Define the triangle method in the player class
     # Use the dimensions from the constants file
@@ -32,8 +33,10 @@ class Player(CircleShape):
     
     # When the key a is pressed turn left calling the rotate method with (-dt) when the key d is pressed turn right calling the rotate method with (dt)
     # When the keys w and s are pressed respectively, the player moves backwards and forwards.
+    # Start a shoot timer to allow for intervals in between shots even if the spacebar is held down
     def update(self, dt):
         keys = pygame.key.get_pressed()
+        self.shoot_timer -= dt
         if keys[pygame.K_a]:
             self.rotate(-dt)
         if keys[pygame.K_d]:
@@ -43,7 +46,12 @@ class Player(CircleShape):
         if keys[pygame.K_s]:
             self.move(-dt)
         if keys[pygame.K_SPACE]:
-            self.shoot()
+            if self.shoot_timer <= 0:
+                self.shoot()
+                self.shoot_timer = PLAYER_SHOT_TIMER
+
+                
+
 
     # Method to move the player forward or backwards
     def move(self, dt):
