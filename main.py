@@ -68,6 +68,15 @@ def main():
 				print("Game over!")
 				import sys
 				sys.exit()
+		
+		# For every asteroid in asteroids, and for every shot_hit in shot, check for bullet collision with asteroids
+		# If there is a collision .kill() the object
+		for asteroid in asteroids:
+			for shot_hit in shot:
+				if asteroid.collision(shot_hit):
+					shot_hit.kill()
+					asteroid.kill()
+
 		pygame.display.flip()
 		
 if __name__ == "__main__":

@@ -50,9 +50,6 @@ class Player(CircleShape):
                 self.shoot()
                 self.shoot_timer = PLAYER_SHOT_TIMER
 
-                
-
-
     # Method to move the player forward or backwards
     def move(self, dt):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
