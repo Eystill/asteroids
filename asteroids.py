@@ -1,4 +1,6 @@
 import pygame
+import random
+from constants import ASTEROID_MIN_RADIUS
 from circleshape import CircleShape
 
 # Create an Asteroid class that inherits from CircleShape class.
@@ -17,3 +19,31 @@ class Asteroid(CircleShape):
     # This ensures a smooth update as omitting (dt) would cause the object to update only on a full screen update
     def update(self, dt):
         self.position += self.velocity * dt
+
+    # New method to handle the split of asteroids when they are shot
+    def split(self):
+        # First we remove the asteroid
+        self.kill()
+
+        # If the radius of the new asteroid is less than or equal to the min radius defined in constants, then do nothing.
+        if self.radius <= ASTEROID_MIN_RADIUS:
+            return
+        
+        # Create a random angle between 20 and 50 degrees
+        # Then rotate the asteroit and set a new velocity based on the random angle. With a +- variation it will look like the asteroid splits.
+        # Set the new object radius to be smaller than the previous asteroid
+        random_angle = random.uniform(20,50)
+        new_asteroid_velocity_1 = self.velocity.rotate(random_angle)
+        new_asteroid_velocity_2 = self.velocity.rotate(-random_angle)
+        new_radius = self.radius - ASTEROID_MIN_RADIUS
+
+        # Create two new Asteroid objects based on the new coordinates and the new radius
+        new_asteroid_1 = Asteroid(self.position.x, self.position.y, new_radius)
+        new_asteroid_2 = Asteroid(self.position.x, self.position.y, new_radius)
+        
+        # Set the new velocity of the asteroids. (They speed up when they are shot)
+        new_asteroid_1.velocity = new_asteroid_velocity_1 * 1.2
+        new_asteroid_2.velocity = new_asteroid_velocity_2 * 1.2
+
+        # Return the new asteroid objects
+        return(new_asteroid_1, new_asteroid_2)

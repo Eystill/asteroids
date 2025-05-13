@@ -1,6 +1,5 @@
-# this allows us to use code from
-# the open-source pygame library
-# throughout this file
+# this allows us to use code from the open-source pygame library throughout this file
+import random
 import pygame
 from constants import *
 from player import *
@@ -75,7 +74,7 @@ def main():
 			for shot_hit in shot:
 				if asteroid.collision(shot_hit):
 					shot_hit.kill()
-					asteroid.kill()
+					asteroid.split()
 
 		pygame.display.flip()
 		
